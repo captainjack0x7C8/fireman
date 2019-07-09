@@ -1,0 +1,64 @@
+gitProjects:
+  - name: project-name
+    url: https://your-git-prject-clone-url
+    branch: master
+    globalJvmParams:
+      - spring.profiles.active=pro
+    modules:
+      - name: module-1 
+      - name: module-2
+      - name: module-3
+        jvmParams:
+          - ip.db-path=/mnt/geo-db
+images:
+  - name: my-docker-registry
+    tag: canal-server-1.1.3
+    dockerParams:
+      - flag: v
+        value: /mnt/canal-config:/home/admin/canal-server/conf
+      - flag:
+        value: network host
+    shortName: canal-server
+  - name: elasticsearch
+    tag: 6.7.1
+    dockerParams:
+      - flag: e
+        value: discovery.type=single-node
+      - flag:
+        value: network host
+      - flag: v
+        value: /mnt/elastic/data:/usr/share/elasticsearch/data
+      - flag: v
+        value: /mnt/elastic/plugins:/usr/share/elasticsearch/plugins
+      - flag: v
+        value: /mnt/elastic/config:/usr/share/elasticsearch/config
+    shortName: elasticsearch
+  - name: rabbitmq
+    tag: 3.7-management-alpine
+    dockerParams:
+      - flag: v
+        value: /mnt/rabbitmq:/var/lib/rabbitmq
+      - flag: e
+        value: RABBITMQ_DEFAULT_PASS=myc
+      - flag: e
+        value: RABBITMQ_DEFAULT_USER=myc
+      - flag:
+        value: network host
+    shortName: rabbitmq
+  - name: bitnami/redis
+    tag: 4.0.9
+    dockerParams:
+      - flag: e
+        value: REDIS_PASSWORD=123
+      - flag: v
+        value: /mnt/redis/data:/bitnami/redis/data
+      - flag:
+        value: network host
+    shortName: redis
+  - name: my-docker-registry
+    tag: eureka-single
+    dockerParams:
+      - flag:
+        value: network host
+    shortName: eureka
+
